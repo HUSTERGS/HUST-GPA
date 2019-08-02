@@ -35,8 +35,8 @@ python HUST-GPA.py path_to_your_excel
 {
     "course_info" :[
         {
-            "course": courseName,
-            "grade": gradeValue,
+            "course": "courseName",
+            "grade": "gradeValue",
             "credit": 1.0,
             "subGPA": {
               "HUST": 0,
@@ -51,7 +51,7 @@ python HUST-GPA.py path_to_your_excel
         }, 
 		{
             
-        },...
+        },
     ],
 	"GPA": {
         "HUST": 2.0,
