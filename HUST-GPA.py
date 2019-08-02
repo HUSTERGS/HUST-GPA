@@ -88,10 +88,14 @@ def calculate(df):
 if __name__ == '__main__':
     if (len(sys.argv) == 2):
         if os.path.isfile(sys.argv[1]):
-            calculate(pd.read_excel(sys.argv[1],  header=3))
-            with open('result.json', 'w') as f:
-                f.write(json.dumps(all_info, ensure_ascii=False, sort_keys=False, indent=4))
-            print(result)
+        	try:
+            	calculate(pd.read_excel(sys.argv[1],  header=3))
+            	with open('result.json', 'w') as f:
+                	f.write(json.dumps(all_info, ensure_ascii=False, sort_keys=False, indent=4))
+            	print(result)
+            except:
+            	print("Unknown Error")
+            exit(0)
         else:
             print("Target not exist or is a dir")
             exit(0)
