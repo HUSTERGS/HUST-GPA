@@ -80,9 +80,15 @@ def calculate(df):
                 standard_result = ''
                 pku_result = ''
                 if type(is_optional[index]) != type('') and credit != 0:
-                    hust_result = HUSTGPA(grade=int(course_grade[index]))
-                    standard_result = StandardGPA(grade=int(course_grade[index]))
-                    pku_result = PKUGPA(grade=int(course_grade[index]))
+                    loc_grade = ""
+                    if course_grade[index] == "缓考/":
+                        # 缓考的时候成绩和备注会调换位置
+                        loc_grade = int(is_optional[index])
+                    else:
+                        loc_grade = int(course_grade[index])
+                    hust_result = HUSTGPA(grade=loc_grade)
+                    standard_result = StandardGPA(grade=loc_grade)
+                    pku_result = PKUGPA(grade=loc_grade)
 
                     result['HUST'] += credit * hust_result
                     result['Standard'] += credit * standard_result
