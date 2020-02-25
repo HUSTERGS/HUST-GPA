@@ -94,8 +94,8 @@ def calculate(df):
                     result['Standard'] += credit * standard_result
                     result['PKU'] += credit * pku_result
                     credit_sum += course_credit[index]
-                all_info['course_info'].append({'course': course_name[index].strip(), 'grade': course_grade[index], 'credit': course_credit[index], 'subGPA': {
-                                               "HUST": hust_result, "Standard": standard_result, "PKU": pku_result},  'year': str(i + 1), 'is_optional': type(is_optional[index]) == type('')})
+                all_info['course_info'].append({'course': course_name[index].strip(), 'grade': loc_grade, 'credit': course_credit[index], 'subGPA': {
+                                               "HUST": hust_result, "Standard": standard_result, "PKU": pku_result},  'year': str(i + 1), 'is_optional': type(is_optional[index]) == type('') and is_optional[index] == "公选"})
     result['HUST'] /= credit_sum
     result['Standard'] /= credit_sum
     result['PKU'] /= credit_sum
