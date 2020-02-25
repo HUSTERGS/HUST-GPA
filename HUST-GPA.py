@@ -76,31 +76,35 @@ def calculate(df):
         for index, credit in enumerate(course_credit):
             # 如果是一门课程 并且不是选修 且学分不为0
             if not np.isnan(credit):
+                # 是一门课程
                 hust_result = ''
                 standard_result = ''
                 pku_result = ''
-                if type(is_optional[index]) != type('') and credit != 0:
-                    loc_grade = ""
-                    if course_grade[index] == "缓考/":
-                        # 缓考的时候成绩和备注会调换位置
-                        loc_grade = int(is_optional[index])
-                    else:
-                        loc_grade = int(course_grade[index])
-                    hust_result = HUSTGPA(grade=loc_grade)
-                    standard_result = StandardGPA(grade=loc_grade)
-                    pku_result = PKUGPA(grade=loc_grade)
+                # 处理缓考
+                if course_grade[index] == "缓考/":
+                    # 缓考的时候成绩和备注会调换位置
+                    loc_grade = is_optional[index]
+                else:
+                    loc_grade = course_grade[index]
+                # print(course_name[index], course_grade[index], course_credit[index], is_optional[index]);
+                if type(is_optional[index]) != type('') or course_grade[index] == "缓考/":
+                    # 不是公选，或者是缓考的课程
+                    if str.isdigit(loc_grade):
+                        # 不考虑成绩为良等的情况
+                        hust_result = HUSTGPA(grade=int(loc_grade))
+                        standard_result = StandardGPA(grade=int(loc_grade))
+                        pku_result = PKUGPA(grade=int(loc_grade))
 
-                    result['HUST'] += credit * hust_result
-                    result['Standard'] += credit * standard_result
-                    result['PKU'] += credit * pku_result
-                    credit_sum += course_credit[index]
+                        result['HUST'] += credit * hust_result
+                        result['Standard'] += credit * standard_result
+                        result['PKU'] += credit * pku_result
+                        credit_sum += course_credit[index]
                 all_info['course_info'].append({'course': course_name[index].strip(), 'grade': loc_grade, 'credit': course_credit[index], 'subGPA': {
                                                "HUST": hust_result, "Standard": standard_result, "PKU": pku_result},  'year': str(i + 1), 'is_optional': type(is_optional[index]) == type('') and is_optional[index] == "公选"})
     result['HUST'] /= credit_sum
     result['Standard'] /= credit_sum
     result['PKU'] /= credit_sum
     all_info['GPA'] = result
-
 
 if __name__ == '__main__':
     if (len(sys.argv) == 2):
