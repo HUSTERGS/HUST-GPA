@@ -1,5 +1,9 @@
 # HUST-GPA
 
+> 建议使用[可信电子成绩](https://cjd.hust.edu.cn/#/dashboard)平台进行查询，方便快捷又准确，实乃最佳之选
+
+
+
 ### 华中科技大学 GPA计算
 
 包括
